@@ -5,6 +5,7 @@ from .apns import APNSServerError
 from .gcm import GCMError
 from .models import APNSDevice, GCMDevice, WNSDevice
 from .settings import PUSH_NOTIFICATIONS_SETTINGS as SETTINGS
+from gobiko.apns.exceptions import APNsException
 
 User = apps.get_model(*SETTINGS["USER_MODEL"].split("."))
 
@@ -40,6 +41,8 @@ class DeviceAdmin(admin.ModelAdmin):
 				errors.append(str(e))
 			except APNSServerError as e:
 				errors.append(e.status)
+			except APNsException as e:
+				errors.append(type(e).__name__)
 
 			if bulk:
 				break

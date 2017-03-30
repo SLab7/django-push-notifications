@@ -101,7 +101,11 @@ def _auth_key_apns_send(registration_id, alert, **kwargs):
     )
 
     kwargs['alert'] = alert
-    return client.send_message(registration_id, **kwargs)
+    ret = client.send_message(registration_id, **kwargs)
+    if ret == True:
+        return 'True'
+    else:
+        return ret
 
 
 def _auth_key_apns_bulk_send(registration_ids, alert, **kwargs):
