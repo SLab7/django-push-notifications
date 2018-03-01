@@ -38,10 +38,13 @@ class DeviceAdmin(admin.ModelAdmin):
 				if r:
 					ret.append(r)
 			except GCMError as e:
+				print(e)
 				errors.append(str(e))
 			except APNSServerError as e:
+				print(e)
 				errors.append(e.status)
 			except APNsException as e:
+				print(e)
 				errors.append(type(e).__name__)
 
 			if bulk:
