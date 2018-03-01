@@ -90,7 +90,7 @@ def _auth_key_apns_send(registration_id, alert, **kwargs):
     APNS_KEY_ID = SETTINGS.get('APNS_KEY_ID')
     APNS_KEY_FILEPATH = SETTINGS.get('APNS_KEY_FILEPATH')
     APNS_USE_SANDBOX = SETTINGS.get('APNS_USE_SANDBOX', True)
-
+    print(APNS_KEY_FILEPATH)
     client = APNsClient(
         team_id=TEAM_ID,
         bundle_id=BUNDLE_ID,
@@ -170,6 +170,7 @@ def apns_send_message(registration_id, alert, **kwargs):
 
     if SETTINGS.get('USE_APNS_KEY', False):
         _check_auth_key_settings()
+        print "sending using APNS key"
         return _auth_key_apns_send(registration_id, alert, **kwargs)
     else:
         try:
@@ -193,6 +194,7 @@ def apns_send_bulk_message(registration_ids, alert, **kwargs):
     """
     if SETTINGS.get('USE_APNS_KEY', False):
         _check_auth_key_settings()
+        print "sending using APNS key"
         return _auth_key_apns_bulk_send(registration_ids, alert, **kwargs)
     else:
         results = _apns_send(registration_ids, alert, batch=True, **kwargs)
