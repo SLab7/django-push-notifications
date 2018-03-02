@@ -1,5 +1,7 @@
+import logging
 from django.apps import apps
 from django.contrib import admin, messages
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 from .apns import APNSServerError
 from .gcm import GCMError
@@ -8,6 +10,8 @@ from .settings import PUSH_NOTIFICATIONS_SETTINGS as SETTINGS
 from gobiko.apns.exceptions import APNsException
 
 User = apps.get_model(*SETTINGS["USER_MODEL"].split("."))
+
+logger = logging.getLogger('push_notifications')
 
 
 class DeviceAdmin(admin.ModelAdmin):
@@ -37,14 +41,17 @@ class DeviceAdmin(admin.ModelAdmin):
 					r = device.send_message("Test single notification")
 				if r:
 					ret.append(r)
+			except ImpoperlyConfigured as e:
+				logger.error(e)
+				errors.append(e)
 			except GCMError as e:
-				print(e)
+				logger.error(e)
 				errors.append(str(e))
 			except APNSServerError as e:
-				print(e)
+				logger.error(e)
 				errors.append(e.status)
 			except APNsException as e:
-				print(e)
+				logger.error(e)
 				errors.append(type(e).__name__)
 
 			if bulk:

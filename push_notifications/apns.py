@@ -4,6 +4,7 @@ Documentation is available on the iOS Developer Library:
 https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html
 """
 
+import logging
 import time
 
 from apns2 import client as apns2_client
@@ -16,6 +17,8 @@ from . import models
 from . import NotificationError
 from .apns_errors import reason_for_exception_class
 from .settings import PUSH_NOTIFICATIONS_SETTINGS as SETTINGS
+
+logger = logging.getLogger('push_notifications')
 
 
 class APNSError(NotificationError):
@@ -90,7 +93,11 @@ def _auth_key_apns_send(registration_id, alert, **kwargs):
     APNS_KEY_ID = SETTINGS.get('APNS_KEY_ID')
     APNS_KEY_FILEPATH = SETTINGS.get('APNS_KEY_FILEPATH')
     APNS_USE_SANDBOX = SETTINGS.get('APNS_USE_SANDBOX', True)
-    print(APNS_KEY_FILEPATH)
+    logger.debug(TEAM_ID)
+    logger.debug(BUNDLE_ID)
+    logger.debug(APNS_KEY_ID)
+    logger.debug(APNS_KEY_FILEPATH)
+    logger.debug(APNS_USE_SANDBOX)
     client = APNsClient(
         team_id=TEAM_ID,
         bundle_id=BUNDLE_ID,
