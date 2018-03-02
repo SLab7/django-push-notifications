@@ -41,7 +41,7 @@ class DeviceAdmin(admin.ModelAdmin):
 					r = device.send_message("Test single notification")
 				if r:
 					ret.append(r)
-			except ImpoperlyConfigured as e:
+			except ImproperlyConfigured as e:
 				logger.error(e)
 				errors.append(e)
 			except GCMError as e:
