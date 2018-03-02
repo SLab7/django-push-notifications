@@ -45,13 +45,13 @@ class DeviceAdmin(admin.ModelAdmin):
 				logger.error(e)
 				errors.append(e)
 			except GCMError as e:
-				logger.error(e)
+				logger.error(str(e))
 				errors.append(str(e))
 			except APNSServerError as e:
-				logger.error(e)
+				logger.error(e.status)
 				errors.append(e.status)
 			except APNsException as e:
-				logger.error(e)
+				logger.error(type(e).__name__)
 				errors.append(type(e).__name__)
 
 			if bulk:

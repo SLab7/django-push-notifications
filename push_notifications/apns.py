@@ -93,11 +93,6 @@ def _auth_key_apns_send(registration_id, alert, **kwargs):
     APNS_KEY_ID = SETTINGS.get('APNS_KEY_ID')
     APNS_KEY_FILEPATH = SETTINGS.get('APNS_KEY_FILEPATH')
     APNS_USE_SANDBOX = SETTINGS.get('APNS_USE_SANDBOX', True)
-    logger.debug(TEAM_ID)
-    logger.debug(BUNDLE_ID)
-    logger.debug(APNS_KEY_ID)
-    logger.debug(APNS_KEY_FILEPATH)
-    logger.debug(APNS_USE_SANDBOX)
     client = APNsClient(
         team_id=TEAM_ID,
         bundle_id=BUNDLE_ID,
